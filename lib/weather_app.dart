@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_page.dart';
+import 'presentation/home/home_page.dart';
 import 'resources/strings.dart';
 import 'theme/weather_theme.dart';
 
