@@ -1,3 +1,4 @@
+import 'package:db_course_app/resources/images.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Column(
         children: [],
+      ),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: onPressed,
+            icon: icon,
+          )
+        ],
       ),
     );
   }
