@@ -1,5 +1,8 @@
-import 'package:db_course_app/resources/images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../resources/images.dart';
+import 'widgets/weather_today.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -15,16 +18,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [],
+        children: [WeatherToday()],
       ),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: onPressed,
-            icon: icon,
-          )
-        ],
-      ),
+      appBar: AppBar(actions: [
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 23),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            IconButton(
+              onPressed: onPressed,
+              icon: SvgPicture.asset(Images.icLocation),
+            ),
+            IconButton(
+              onPressed: onPressed,
+              icon: SvgPicture.asset(Images.icSearch),
+            )
+          ]),
+        ))
+      ]),
     );
   }
+
+  void onPressed() {}
 }
