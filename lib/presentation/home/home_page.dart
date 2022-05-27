@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../resources/images.dart';
+import 'widgets/weather_days_list.dart';
 import 'widgets/weather_today.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,25 +20,30 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [WeatherToday()],
+        children: [WeatherToday(), WeatherDaysList()],
       ),
-      appBar: AppBar(actions: [
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 23),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            IconButton(
-              onPressed: onPressed,
-              icon: SvgPicture.asset(Images.icLocation),
-            ),
-            IconButton(
-              onPressed: onPressed,
-              icon: SvgPicture.asset(Images.icSearch),
-            )
+      appBar: AppBar(
+          toolbarHeight: 70,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          backgroundColor: const Color.fromARGB(4, 0, 0, 0),
+          actions: [
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 23),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: onPressed,
+                      icon: SvgPicture.asset(Images.icLocation),
+                    ),
+                    IconButton(
+                      onPressed: onPressed,
+                      icon: SvgPicture.asset(Images.icSearch),
+                    )
+                  ]),
+            ))
           ]),
-        ))
-      ]),
     );
   }
 

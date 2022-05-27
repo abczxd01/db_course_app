@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,7 +9,7 @@ const TextStyle textStyleTemperature = TextStyle(
 );
 
 const TextStyle textStyleCity = TextStyle(
-  color: Colors.black45,
+  color: Colors.grey,
   fontSize: 16,
   fontWeight: FontWeight.w400,
 );
@@ -21,35 +19,50 @@ const TextStyle textStyleDescription = TextStyle(
 );
 
 class WeatherToday extends StatelessWidget {
-  String temperature = '12°';
-  String city = 'Cupertino';
-  String description = 'Sunny and bright';
+  static const temperature = '12°';
+  static const city = 'Cupertino';
+  static const description = 'Sunny and bright';
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          Images.ic01d,
-        ),
-        Text(
-          temperature,
-          style: textStyleTemperature,
-        ),
-        Row(
-          children: [
-            SvgPicture.asset(Images.icGeoMark),
-            Text(
-              city,
-              style: textStyleCity,
+    return Container(
+      color: const Color.fromARGB(4, 0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 25, 0, 58),
+      child: Stack(
+        children: [
+          Transform.translate(
+              offset: const Offset(-205, 0), child: Image.asset(Images.ic01d)),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(200, 90, 0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      Images.icGeoMark,
+                      color: Colors.grey,
+                    ),
+                    const Text(
+                      city,
+                      style: textStyleCity,
+                    ),
+                  ],
+                ),
+                const Text(
+                  temperature,
+                  style: textStyleTemperature,
+                ),
+                const Text(
+                  description,
+                  style: textStyleDescription,
+                ),
+              ],
             ),
-          ],
-        ),
-        Text(
-          description,
-          style: textStyleDescription,
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
