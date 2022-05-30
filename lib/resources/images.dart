@@ -3,6 +3,8 @@ class Images {
   static const svgFolder = 'assets/images/svg';
   static const pngFolder = 'assets/images/png';
 
+  static const icClose = '$pngFolder/ic_close.png';
+
   //svg
   static const icSearch = '$svgFolder/ic_search.svg';
   static const icLocation = '$svgFolder/ic_location.svg';

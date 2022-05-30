@@ -1,8 +1,11 @@
+import 'package:db_course_app/navigation/app_router.dart';
+import 'package:db_course_app/presentation/search/search_page.dart';
+import 'package:db_course_app/resources/images.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../resources/images.dart';
 import 'widgets/weather_days_list.dart';
 import 'widgets/weather_today.dart';
 
@@ -16,11 +19,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const temperature = '12°';
+  static const city = 'Cupertino';
+  static const description = 'Sunny and bright';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [WeatherToday(), WeatherDaysList()],
+        children: [
+          const WeatherToday(
+            temperature: temperature,
+            city: city,
+            description: description,
+          ),
+          WeatherDaysList()
+        ],
       ),
       appBar: AppBar(
           toolbarHeight: 70,
@@ -34,11 +48,11 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: onPressed,
+                      onPressed: onPressedLocation,
                       icon: SvgPicture.asset(Images.icLocation),
                     ),
                     IconButton(
-                      onPressed: onPressed,
+                      onPressed: onPressedSearch,
                       icon: SvgPicture.asset(Images.icSearch),
                     )
                   ]),
@@ -47,5 +61,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void onPressed() {}
+  void onPressedSearch() {
+    appRouter.goTo(
+      context: context,
+      route: const SearchPage(
+        city: city,
+      ),
+    );
+  }
+
+  void onPressedLocation() {}
 }

@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 
 const defaultFontFamily = 'Manrope';
 
-const defaultTextStyle = TextStyle(
+const defaultTextStyle1 = TextStyle(
   fontFamily: defaultFontFamily,
-  color: Colors.black,
   height: 1.1,
+  color: Colors.black,
+  fontSize: 18,
+  fontWeight: FontWeight.w300,
+);
+
+const defaultTextStyle2 = TextStyle(
+  fontFamily: defaultFontFamily,
+  height: 1.1,
+  color: Colors.black,
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
 );
 
 class WeatherTheme {
@@ -32,8 +42,29 @@ class WeatherTheme {
         fontWeight: FontWeight.w400,
         height: 1.1,
       ),
-      bodyText2: defaultTextStyle,
-      // Дописывайте сюда остальные текстовые стили приложения которые вам могут понадобиться
+      headline2: TextStyle(
+        fontFamily: defaultFontFamily,
+        color: Colors.black,
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        height: 1.1,
+      ),
+      headline3: TextStyle(
+        fontFamily: defaultFontFamily,
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        height: 1.1,
+      ),
+      headline4: TextStyle(
+        fontFamily: defaultFontFamily,
+        color: Colors.black,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        height: 1.1,
+      ),
+      bodyText1: defaultTextStyle1,
+      bodyText2: defaultTextStyle2,
     ),
   );
 }

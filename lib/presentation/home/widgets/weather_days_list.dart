@@ -1,15 +1,10 @@
 import 'package:db_course_app/resources/images.dart';
 import 'package:flutter/material.dart';
 
-const TextStyle textStyle = TextStyle(
-  fontSize: 18,
-  fontWeight: FontWeight.w400,
+const textStylePrecipitation = TextStyle(
+  color: Color.fromRGBO(1, 14, 130, 0.5),
+  fontSize: 12,
 );
-
-const TextStyle textStylePrecipitation = TextStyle(
-    color: Color.fromRGBO(1, 14, 130, 0.5),
-    fontSize: 12,
-    fontWeight: FontWeight.w400);
 
 class WeatherListItem extends StatelessWidget {
   const WeatherListItem({
@@ -30,8 +25,8 @@ class WeatherListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
           border: !last
               ? const Border(
@@ -44,7 +39,6 @@ class WeatherListItem extends StatelessWidget {
             flex: 2,
             child: Text(
               weekDay,
-              style: textStyle,
             ),
           ),
           Expanded(
@@ -57,7 +51,7 @@ class WeatherListItem extends StatelessWidget {
                 ),
                 if (precipitation != null)
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                    padding: const EdgeInsets.only(left: 8),
                     child: Text(
                       '$precipitation%',
                       style: textStylePrecipitation,
@@ -68,7 +62,6 @@ class WeatherListItem extends StatelessWidget {
           ),
           Text(
             temperature,
-            style: textStyle,
           ),
         ],
       ),
@@ -80,8 +73,8 @@ class WeatherDaysList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 24),
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(children: const [
         WeatherListItem(
             temperature: '10°',
