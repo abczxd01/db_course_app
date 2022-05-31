@@ -1,4 +1,7 @@
+import 'package:db_course_app/fixtures/city_items.dart';
 import 'package:db_course_app/navigation/app_router.dart';
+import 'package:db_course_app/presentation/search/widgets/cities_list_item_widget.dart';
+import 'package:db_course_app/presentation/search/widgets/past_search_block.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/current_location_widget.dart';
@@ -15,6 +18,8 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
+  String? chosenCity;
+  List<String> pastSearchCities = [];
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +52,32 @@ class _SearchPageState extends State<SearchPage> {
             const SizedBox(
               height: 32,
             ),
-            CurrentLocationWidget(city: widget.city),
-            const Divider(
-              height: 48,
-              thickness: 1,
-            )
+            if (_focusNode.hasFocus == false) ...[
+              CurrentLocationWidget(city: widget.city),
+              const Divider(
+                height: 48,
+                thickness: 1,
+              ),
+              PastSearchBlock(
+                  onClearAllTap: () => setState(() {
+                        pastSearchCities.clear();
+                      }),
+                  pastSearchCities: pastSearchCities)
+            ] else ...[
+              Column(
+                children: [
+                  for (final cityItem in testCities) ...[
+                    CitiesListItemWidget(
+                        item: cityItem,
+                        onTap: () => onCityItemTap(cityItem.city)),
+                    const Divider(
+                      thickness: 1,
+                      height: 1,
+                    )
+                  ]
+                ],
+              )
+            ]
           ],
         ),
       ),
@@ -60,5 +86,13 @@ class _SearchPageState extends State<SearchPage> {
 
   void onPressed() {
     appRouter.goBack(context);
+  }
+
+  void onCityItemTap(String city) {
+    setState(() {
+      pastSearchCities.add(city);
+      chosenCity = city;
+      _focusNode.unfocus();
+    });
   }
 }
