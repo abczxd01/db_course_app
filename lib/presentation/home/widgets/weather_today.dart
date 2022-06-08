@@ -6,10 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class WeatherToday extends StatelessWidget {
   const WeatherToday({
     required this.weatherDay,
+    required this.animation,
     Key? key,
   }) : super(key: key);
 
   final WeatherDay weatherDay;
+  final Animation<double> animation;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,34 @@ class WeatherToday extends StatelessWidget {
       padding: const EdgeInsets.only(top: 25, bottom: 58),
       child: Stack(
         children: [
-          Transform.translate(
-              offset: const Offset(-205, 0),
-              child: Image.asset(weatherDay.icon)),
+          AnimatedBuilder(
+            animation: animation,
+            builder: (context, child) => Container(
+              padding: EdgeInsets.only(top: animation.value),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).shadowColor,
+                    spreadRadius: 15,
+                    blurRadius: 50,
+                    offset: const Offset(0, 50), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: ClipRect(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  widthFactor: 0.5,
+                  heightFactor: 1.0,
+                  child: Image.asset(
+                    weatherDay.icon,
+                    width: 350,
+                    height: 350,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 200, top: 90),
             child: Column(

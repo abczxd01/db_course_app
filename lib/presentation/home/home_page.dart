@@ -19,9 +19,14 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   final _chosenCity = ValueNotifier('Cupertino');
   List<String> pastSearchCities = [];
+
+  late AnimationController _animationController;
+  late Animation<double> _curve;
+  late Animation<double> _animation;
 
   late WeatherDay weatherDay = WeatherDay(
       dayName: 'Monday',
@@ -31,12 +36,26 @@ class _HomePageState extends State<HomePage> {
       weatherDescription: 'Sunny and bright');
 
   @override
+  void initState() {
+    super.initState();
+
+    _initAnimation();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
           WeatherToday(
             weatherDay: weatherDay,
+            animation: _animation,
           ),
           WeatherDaysList()
         ],
@@ -78,4 +97,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onPressedLocation() {}
+
+  void _initAnimation() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+    _curve = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeOut,
+    );
+    _animation = Tween<double>(begin: 0, end: 8).animate(_curve);
+    _animationController.forward();
+    _animation = Tween<double>(begin: 0, end: 8).animate(_curve)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _animationController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          _animationController.forward();
+        }
+      });
+  }
 }
