@@ -40,16 +40,20 @@ class _PastSearchBlockState extends State<PastSearchBlock> {
         const SizedBox(
           height: 8,
         ),
-        for (final city in widget.pastSearchCities) ...[
-          PastSearchItemWidget(
-              city: city,
-              onTapCity: () => {},
-              onTapDelete: () {
-                setState(() {
-                  widget.pastSearchCities.remove(city);
-                });
-              })
-        ]
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.pastSearchCities.length,
+            itemBuilder: (context, index) {
+              return PastSearchItemWidget(
+                  city: widget.pastSearchCities[index],
+                  onTapCity: () => {},
+                  onTapDelete: () {
+                    setState(() {
+                      widget.pastSearchCities
+                          .remove(widget.pastSearchCities[index]);
+                    });
+                  });
+            }),
       ],
     );
   }

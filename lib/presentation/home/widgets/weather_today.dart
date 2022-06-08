@@ -1,18 +1,15 @@
+import 'package:db_course_app/models/weather_day.dart';
 import 'package:db_course_app/resources/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WeatherToday extends StatelessWidget {
   const WeatherToday({
-    required this.temperature,
-    required this.city,
-    required this.description,
+    required this.weatherDay,
     Key? key,
   }) : super(key: key);
 
-  final String temperature;
-  final String city;
-  final String description;
+  final WeatherDay weatherDay;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,8 @@ class WeatherToday extends StatelessWidget {
       child: Stack(
         children: [
           Transform.translate(
-              offset: const Offset(-205, 0), child: Image.asset(Images.ic01d)),
+              offset: const Offset(-205, 0),
+              child: Image.asset(weatherDay.icon)),
           Padding(
             padding: const EdgeInsets.only(left: 200, top: 90),
             child: Column(
@@ -37,7 +35,7 @@ class WeatherToday extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     Text(
-                      city,
+                      weatherDay.locationName,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!
@@ -46,11 +44,11 @@ class WeatherToday extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  temperature,
+                  weatherDay.degrees,
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Text(
-                  description,
+                  weatherDay.weatherDescription,
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ],

@@ -1,3 +1,4 @@
+import 'package:db_course_app/models/weather_day.dart';
 import 'package:db_course_app/navigation/app_router.dart';
 import 'package:db_course_app/presentation/search/search_page.dart';
 import 'package:db_course_app/resources/images.dart';
@@ -19,19 +20,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const temperature = '12°';
-  static const city = 'Cupertino';
-  static const description = 'Sunny and bright';
+  final _chosenCity = ValueNotifier('Cupertino');
+  List<String> pastSearchCities = [];
+
+  late WeatherDay weatherDay = WeatherDay(
+      dayName: 'Monday',
+      icon: Images.ic01d,
+      degrees: '12°',
+      locationName: _chosenCity.value,
+      weatherDescription: 'Sunny and bright');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          const WeatherToday(
-            temperature: temperature,
-            city: city,
-            description: description,
+          WeatherToday(
+            weatherDay: weatherDay,
           ),
           WeatherDaysList()
         ],
@@ -64,8 +69,10 @@ class _HomePageState extends State<HomePage> {
   void onPressedSearch() {
     appRouter.goTo(
       context: context,
-      route: const SearchPage(
-        city: city,
+      route: SearchPage(
+        chosenCity: _chosenCity,
+        onCityChosen: () => {setState(() {})},
+        pastSearchCities: pastSearchCities,
       ),
     );
   }
