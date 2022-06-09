@@ -1,3 +1,34 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code related
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.packages
+.pub-cache/
+.pub/
+/build/
+.gradle/
+local.properties
+
 # Android related
 !**/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -12,6 +43,7 @@
 **/android/app/.settings/
 **/android/app/.classpath
 **/android/app/.project
+
 # iOS/XCode related
 **/ios/**/*.mode1v3
 **/ios/**/*.mode2v3
@@ -38,13 +70,23 @@
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/Flutter/.last_build_id
+
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# Fastlane related
+**/ios/fastlane/report\.xml
+**/android/fastlane/report\.xml
+*.zip
+
 *.ipa
 *.apk
 *.mobileprovision
+
+.flutter-plugins-dependencies
