@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class WeatherToday extends StatelessWidget {
   const WeatherToday({
+    required this.chosenCity,
     required this.weatherDay,
     required this.animation,
     Key? key,
@@ -12,10 +13,12 @@ class WeatherToday extends StatelessWidget {
 
   final WeatherDay weatherDay;
   final Animation<double> animation;
+  final chosenCity;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 445,
       color: const Color.fromARGB(4, 0, 0, 0),
       padding: const EdgeInsets.only(top: 25, bottom: 58),
       child: Stack(
@@ -30,7 +33,7 @@ class WeatherToday extends StatelessWidget {
                     color: Theme.of(context).shadowColor,
                     spreadRadius: 15,
                     blurRadius: 50,
-                    offset: const Offset(0, 50), // changes position of shadow
+                    offset: const Offset(0, 10), // changes position of shadow
                   ),
                 ],
               ),
@@ -62,7 +65,7 @@ class WeatherToday extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     Text(
-                      weatherDay.locationName,
+                      chosenCity.value,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!
