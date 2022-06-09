@@ -14,10 +14,19 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_lints: ^2.0.0
   flutter_svg: ^1.1.0
+  built_collection: ^5.1.1
+  built_value: ^8.0.6
+  built_value_generator: ^8.0.6
+  dash_kit_core: ^3.0.2
+  geolocator: ^8.0.3
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.1.2
+  freezed: ^0.14.5
+  json_serializable: ^5.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

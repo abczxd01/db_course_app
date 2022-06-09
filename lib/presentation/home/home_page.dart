@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage>
   late AnimationController _animationController;
   late Animation<double> _curve;
   late Animation<double> _animation;
-
   late WeatherDay weatherDay = WeatherDay(
       dayName: 'Monday',
       icon: Images.ic01d,
@@ -55,6 +54,7 @@ class _HomePageState extends State<HomePage>
         children: [
           WeatherToday(
             weatherDay: weatherDay,
+            chosenCity: _chosenCity,
             animation: _animation,
           ),
           WeatherDaysList()
