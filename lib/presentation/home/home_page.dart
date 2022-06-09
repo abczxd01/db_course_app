@@ -1,3 +1,5 @@
+import 'package:dash_kit_core/dash_kit_core.dart';
+import 'package:db_course_app/features/geolocation/actions/get_geolocation_action.dart';
 import 'package:db_course_app/models/weather_day.dart';
 import 'package:db_course_app/navigation/app_router.dart';
 import 'package:db_course_app/presentation/search/search_page.dart';
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: onPressedLocation,
+                      onPressed: _getGeolocation,
                       icon: SvgPicture.asset(Images.icLocation),
                     ),
                     IconButton(
@@ -117,5 +119,43 @@ class _HomePageState extends State<HomePage>
           _animationController.forward();
         }
       });
+  }
+
+  Future showSimpleDialog(
+      {required BuildContext context,
+      required String title,
+      required String text}) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        content: Text(text, style: Theme.of(context).textTheme.bodyText1),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _getGeolocation() {
+    context.dispatch(GetGeolocationAction()).then((_) {
+      showSimpleDialog(
+        context: context,
+        title: 'Success!',
+        text: 'Geolocation received',
+      );
+    }).catchError((error) {
+      showSimpleDialog(
+        context: context,
+        title: 'Oops!',
+        text: error.toString(),
+      );
+    });
   }
 }
