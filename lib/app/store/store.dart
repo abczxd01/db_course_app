@@ -1,4 +1,5 @@
 import 'package:dash_kit_core/dash_kit_core.dart';
+import 'package:db_course_app/api_client/weather_api_client.dart';
 import 'package:db_course_app/app/app_state.dart';
 import 'package:db_course_app/app/store/redux_action_logger.dart';
 import 'package:db_course_app/app/store/redux_action_observer.dart';
@@ -18,7 +19,7 @@ Store<AppState> configureStore() {
   );
 }
 
-void configureDependencyInjection() {
+void configureDependencyInjection(WeatherApiClient apiClient) {
   final geolocationService = GeolocationService();
   GetIt.I.registerSingleton<GeolocationService>(geolocationService);
 }
