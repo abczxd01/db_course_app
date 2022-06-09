@@ -1,4 +1,4 @@
-import 'package:db_course_app/models/city_item.dart';
+import 'package:db_course_app/models/network/responses/city_item.dart';
 import 'package:flutter/material.dart';
 
 class CitiesListItemWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class CitiesListItemWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Row(
           children: [
-            Text(item.city),
+            Text(item.name),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
               child: CircleAvatar(

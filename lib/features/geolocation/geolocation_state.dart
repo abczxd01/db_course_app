@@ -1,7 +1,7 @@
 library geolocation_state;
 
 import 'package:built_value/built_value.dart';
-import 'package:db_course_app/models/location_point.dart';
+import 'package:db_course_app/models/network/responses/location_point.dart';
 
 part 'geolocation_state.g.dart';
 

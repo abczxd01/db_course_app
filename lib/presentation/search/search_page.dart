@@ -78,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 itemBuilder: (context, index) => CitiesListItemWidget(
                     item: testCities[index],
-                    onTap: () => onCityItemTap(testCities[index].city)),
+                    onTap: () => onCityItemTap(testCities[index].name)),
                 itemCount: testCities.length,
               ),
             ]

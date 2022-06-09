@@ -1,4 +1,4 @@
-import 'package:db_course_app/models/location_point.dart';
+import 'package:db_course_app/models/network/responses/location_point.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeolocationService {
