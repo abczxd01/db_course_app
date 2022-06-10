@@ -1,6 +1,6 @@
 import 'package:db_course_app/models/network/response_model.dart';
 import 'package:db_course_app/models/network/responses/locality_day_weather.dart';
-import 'package:db_course_app/models/weather_day.dart';
+import 'package:db_course_app/models/state/weather_day.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'days_weather.freezed.dart';

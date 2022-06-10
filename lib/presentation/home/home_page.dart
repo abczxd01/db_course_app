@@ -1,9 +1,12 @@
 import 'package:dash_kit_core/dash_kit_core.dart';
+import 'package:db_course_app/app/operations.dart';
 import 'package:db_course_app/features/geolocation/actions/get_geolocation_action.dart';
-import 'package:db_course_app/models/weather_day.dart';
+import 'package:db_course_app/features/weather/actions/get_weather_by_location.dart';
+import 'package:db_course_app/models/state/weather_day.dart';
 import 'package:db_course_app/navigation/app_router.dart';
 import 'package:db_course_app/presentation/search/search_page.dart';
 import 'package:db_course_app/resources/images.dart';
+import 'package:db_course_app/widgets/connected_loadable.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,17 +32,11 @@ class _HomePageState extends State<HomePage>
   late AnimationController _animationController;
   late Animation<double> _curve;
   late Animation<double> _animation;
-  late WeatherDay weatherDay = WeatherDay(
-      dayName: 'Monday',
-      icon: Images.ic01d,
-      degrees: '12°',
-      locationName: _chosenCity.value,
-      weatherDescription: 'Sunny and bright');
 
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getGeolocation());
     _initAnimation();
   }
 
@@ -52,15 +49,19 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          WeatherToday(
-            weatherDay: weatherDay,
-            chosenCity: _chosenCity,
-            animation: _animation,
-          ),
-          WeatherDaysList()
-        ],
+      body: ConnectedLoadable(
+        converter: (s) =>
+            s.getOperationState(Operation.getGeolocation).isInProgress ||
+            s.getOperationState(Operation.getWeatherByLocation).isInProgress,
+        child: Column(
+          children: [
+            WeatherToday(
+              chosenCity: _chosenCity,
+              animation: _animation,
+            ),
+            WeatherDaysList()
+          ],
+        ),
       ),
       appBar: AppBar(
           toolbarHeight: 70,
@@ -144,18 +145,19 @@ class _HomePageState extends State<HomePage>
   }
 
   void _getGeolocation() {
-    context.dispatch(GetGeolocationAction()).then((_) {
-      showSimpleDialog(
-        context: context,
-        title: 'Success!',
-        text: 'Geolocation received',
-      );
-    }).catchError((error) {
+    context
+        .dispatch(GetGeolocationAction())
+        .then((_) => _getWeatherByLocation())
+        .catchError((error) {
       showSimpleDialog(
         context: context,
         title: 'Oops!',
         text: error.toString(),
       );
     });
+  }
+
+  void _getWeatherByLocation() {
+    context.dispatch(GetWeatherByLocationAction());
   }
 }

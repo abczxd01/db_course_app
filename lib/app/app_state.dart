@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:dash_kit_core/dash_kit_core.dart';
 import 'package:db_course_app/features/geolocation/geolocation_state.dart';
+import 'package:db_course_app/features/weather/weather_state.dart';
 
 part 'app_state.g.dart';
 
@@ -11,6 +12,7 @@ abstract class AppState
   AppState._();
 
   GeolocationState get geolocation;
+  WeatherState get weather;
 
   // And implementation of GlobalState interface
   @override
@@ -39,7 +41,10 @@ abstract class AppState
 
   static AppState initial() {
     return AppState(
-      (b) => b.geolocation = GeolocationState.initial().toBuilder(),
+      (b) => [
+        b.geolocation = GeolocationState.initial().toBuilder(),
+        b.weather = WeatherState.initial().toBuilder()
+      ],
     );
   }
 }

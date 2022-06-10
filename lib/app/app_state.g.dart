@@ -10,15 +10,21 @@ class _$AppState extends AppState {
   @override
   final GeolocationState geolocation;
   @override
+  final WeatherState weather;
+  @override
   final BuiltMap<Object, OperationState> operationsState;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
 
-  _$AppState._({required this.geolocation, required this.operationsState})
+  _$AppState._(
+      {required this.geolocation,
+      required this.weather,
+      required this.operationsState})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         geolocation, r'AppState', 'geolocation');
+    BuiltValueNullFieldError.checkNotNull(weather, r'AppState', 'weather');
     BuiltValueNullFieldError.checkNotNull(
         operationsState, r'AppState', 'operationsState');
   }
@@ -35,18 +41,21 @@ class _$AppState extends AppState {
     if (identical(other, this)) return true;
     return other is AppState &&
         geolocation == other.geolocation &&
+        weather == other.weather &&
         operationsState == other.operationsState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, geolocation.hashCode), operationsState.hashCode));
+    return $jf($jc($jc($jc(0, geolocation.hashCode), weather.hashCode),
+        operationsState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'AppState')
           ..add('geolocation', geolocation)
+          ..add('weather', weather)
           ..add('operationsState', operationsState))
         .toString();
   }
@@ -61,6 +70,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set geolocation(GeolocationStateBuilder? geolocation) =>
       _$this._geolocation = geolocation;
 
+  WeatherStateBuilder? _weather;
+  WeatherStateBuilder get weather =>
+      _$this._weather ??= new WeatherStateBuilder();
+  set weather(WeatherStateBuilder? weather) => _$this._weather = weather;
+
   MapBuilder<Object, OperationState>? _operationsState;
   MapBuilder<Object, OperationState> get operationsState =>
       _$this._operationsState ??= new MapBuilder<Object, OperationState>();
@@ -73,6 +87,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     final $v = _$v;
     if ($v != null) {
       _geolocation = $v.geolocation.toBuilder();
+      _weather = $v.weather.toBuilder();
       _operationsState = $v.operationsState.toBuilder();
       _$v = null;
     }
@@ -99,12 +114,15 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _$result = _$v ??
           new _$AppState._(
               geolocation: geolocation.build(),
+              weather: weather.build(),
               operationsState: operationsState.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'geolocation';
         geolocation.build();
+        _$failedField = 'weather';
+        weather.build();
         _$failedField = 'operationsState';
         operationsState.build();
       } catch (e) {

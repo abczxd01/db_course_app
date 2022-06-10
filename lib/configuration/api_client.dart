@@ -17,7 +17,6 @@ WeatherApiClient configureApiClient(WeatherApiEnvironment environment) {
 Dio _createApiDio(WeatherApiEnvironment environment) {
   final apiDio = Dio();
 
-  // здесь мы указываем queryParameters, которые будут использоваться для всех запросов
   final map = <String, String>{
     'appid': environment.appId,
     'lang': 'ru',
