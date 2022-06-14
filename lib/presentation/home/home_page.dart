@@ -1,8 +1,9 @@
 import 'package:dash_kit_core/dash_kit_core.dart';
+import 'package:db_course_app/app/app_state.dart';
 import 'package:db_course_app/app/operations.dart';
 import 'package:db_course_app/features/geolocation/actions/get_geolocation_action.dart';
 import 'package:db_course_app/features/weather/actions/get_weather_by_location.dart';
-import 'package:db_course_app/models/state/weather_day.dart';
+import 'package:db_course_app/hooks/home_page_hooks.dart';
 import 'package:db_course_app/navigation/app_router.dart';
 import 'package:db_course_app/presentation/search/search_page.dart';
 import 'package:db_course_app/resources/images.dart';
@@ -10,116 +11,75 @@ import 'package:db_course_app/widgets/connected_loadable.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'widgets/weather_days_list.dart';
 import 'widgets/weather_today.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  final _chosenCity = ValueNotifier('Cupertino');
-  List<String> pastSearchCities = [];
-
-  late AnimationController _animationController;
-  late Animation<double> _curve;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _getGeolocation());
-    _initAnimation();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
+class HomePage extends HookWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final context = useContext();
+    final storeProvider = StoreProvider.of<AppState>(context, 'dispatcher');
+    final dispatch = storeProvider.dispatch;
+    final pastSearchCities = <String>[];
+    final animation = useCurvedAnimation();
+
+    final getGeolocationByLocation = () async {
+      try {
+        await dispatch(GetGeolocationAction());
+        await dispatch(GetWeatherByLocationAction());
+      } catch (e) {
+        showSimpleDialog(
+          context: context,
+          title: 'Oops!',
+          text: e.toString(),
+        );
+      }
+    };
+
+    useEffect(() {
+      getGeolocationByLocation();
+    }, const []);
+
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 70,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        backgroundColor: const Color.fromARGB(4, 0, 0, 0),
+        leading: IconButton(
+          onPressed: getGeolocationByLocation,
+          icon: SvgPicture.asset(Images.icLocation),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => appRouter.goTo(
+              context: context,
+              route: SearchPage(
+                pastSearchCities: pastSearchCities,
+              ),
+            ),
+            icon: SvgPicture.asset(Images.icSearch),
+          ),
+        ],
+      ),
       body: ConnectedLoadable(
-        converter: (s) =>
-            s.getOperationState(Operation.getGeolocation).isInProgress ||
-            s.getOperationState(Operation.getWeatherByLocation).isInProgress,
+        converter: (s) => [
+          s.getOperationState(Operation.getGeolocation),
+          s.getOperationState(Operation.getWeatherByLocation),
+          s.getOperationState(Operation.getWeatherByCityName),
+        ].any((element) => element.isInProgress),
         child: Column(
           children: [
-            WeatherToday(
-              chosenCity: _chosenCity,
-              animation: _animation,
-            ),
-            WeatherDaysList()
+            WeatherToday(animation: animation),
+            WeatherDaysList(),
           ],
         ),
       ),
-      appBar: AppBar(
-          toolbarHeight: 70,
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          backgroundColor: const Color.fromARGB(4, 0, 0, 0),
-          actions: [
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 23),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: _getGeolocation,
-                      icon: SvgPicture.asset(Images.icLocation),
-                    ),
-                    IconButton(
-                      onPressed: onPressedSearch,
-                      icon: SvgPicture.asset(Images.icSearch),
-                    )
-                  ]),
-            ))
-          ]),
     );
-  }
-
-  void onPressedSearch() {
-    appRouter.goTo(
-      context: context,
-      route: SearchPage(
-        chosenCity: _chosenCity,
-        onCityChosen: () => {setState(() {})},
-        pastSearchCities: pastSearchCities,
-      ),
-    );
-  }
-
-  void onPressedLocation() {}
-
-  void _initAnimation() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    );
-    _curve = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    );
-    _animation = Tween<double>(begin: 0, end: 8).animate(_curve);
-    _animationController.forward();
-    _animation = Tween<double>(begin: 0, end: 8).animate(_curve)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _animationController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          _animationController.forward();
-        }
-      });
   }
 
   Future showSimpleDialog(
@@ -142,22 +102,5 @@ class _HomePageState extends State<HomePage>
         ],
       ),
     );
-  }
-
-  void _getGeolocation() {
-    context
-        .dispatch(GetGeolocationAction())
-        .then((_) => _getWeatherByLocation())
-        .catchError((error) {
-      showSimpleDialog(
-        context: context,
-        title: 'Oops!',
-        text: error.toString(),
-      );
-    });
-  }
-
-  void _getWeatherByLocation() {
-    context.dispatch(GetWeatherByLocationAction());
   }
 }

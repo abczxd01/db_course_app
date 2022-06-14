@@ -15,22 +15,22 @@ class SearchTextField extends StatelessWidget {
     required this.controller,
     required this.focusNode,
     required this.onCloseTap,
-    required this.onTap,
+    required this.onComplete,
     Key? key,
   }) : super(key: key);
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final void Function() onCloseTap;
-  final void Function() onTap;
+
+  final void Function(String?) onComplete;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
         controller: controller,
         focusNode: focusNode,
-        onTap: onTap,
-        onEditingComplete: onCloseTap,
+        onFieldSubmitted: onComplete,
         style: inputTextStyle,
         decoration: InputDecoration(
             hintStyle: const TextStyle(fontFamily: defaultFontFamily),

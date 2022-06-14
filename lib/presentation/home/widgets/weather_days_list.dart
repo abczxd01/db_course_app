@@ -66,7 +66,7 @@ class WeatherDaysList extends StatelessWidget {
         converter: (s) => s.weather.nextDays,
         builder: (context, nextDays) {
           return Container(
-              margin: const EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 30),
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: ListView.separated(
                   shrinkWrap: true,

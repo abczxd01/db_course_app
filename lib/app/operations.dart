@@ -1,1 +1,1 @@
-enum Operation { getGeolocation, getWeatherByLocation }
+enum Operation { getGeolocation, getWeatherByLocation, getWeatherByCityName }

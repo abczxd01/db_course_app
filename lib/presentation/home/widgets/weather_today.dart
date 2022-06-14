@@ -6,13 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class WeatherToday extends StatelessWidget {
   const WeatherToday({
-    required this.chosenCity,
     required this.animation,
     Key? key,
   }) : super(key: key);
 
   final Animation<double> animation;
-  final chosenCity;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +66,7 @@ class WeatherToday extends StatelessWidget {
                             color: Colors.grey,
                           ),
                           Text(
-                            chosenCity.value,
+                            weatherDay.locationName,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2!
