@@ -52,39 +52,37 @@ class WeatherToday extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 200, top: 90),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            Images.icGeoMark,
-                            color: Colors.grey,
-                          ),
-                          Text(
-                            weatherDay.locationName,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '${weatherDay.degrees}',
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      Text(
-                        weatherDay.weatherDescription,
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ],
-                  ),
-                )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Images.icGeoMark,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          weatherDay.locationName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '${weatherDay.degrees}°',
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    Text(
+                      weatherDay.weatherDescription,
+                      style: Theme.of(context).textTheme.headline3,
+                    )
+                  ],
+                ),
               ],
             ),
           );

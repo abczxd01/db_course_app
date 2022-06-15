@@ -7,6 +7,7 @@ import 'package:db_course_app/hooks/home_page_hooks.dart';
 import 'package:db_course_app/navigation/app_router.dart';
 import 'package:db_course_app/presentation/search/search_page.dart';
 import 'package:db_course_app/resources/images.dart';
+import 'package:db_course_app/utils/test.dart';
 import 'package:db_course_app/widgets/connected_loadable.dart';
 
 import 'package:flutter/material.dart';
@@ -42,7 +43,10 @@ class HomePage extends HookWidget {
     };
 
     useEffect(() {
-      getGeolocationByLocation();
+      if (!isTestingEnvironment()) {
+        getGeolocationByLocation();
+      }
+      return;
     }, const []);
 
     return Scaffold(
@@ -72,7 +76,7 @@ class HomePage extends HookWidget {
           s.getOperationState(Operation.getWeatherByLocation),
           s.getOperationState(Operation.getWeatherByCityName),
         ].any((element) => element.isInProgress),
-        child: Column(
+        child: ListView(
           children: [
             WeatherToday(animation: animation),
             WeatherDaysList(),

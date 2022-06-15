@@ -1,6 +1,6 @@
 import 'package:dash_kit_core/dash_kit_core.dart';
 import 'package:db_course_app/app/app_state.dart';
-import 'package:db_course_app/core/app_store_connector.dart';
+
 import 'package:db_course_app/features/weather/actions/get_weather_by_city_name_action.dart';
 import 'package:db_course_app/fixtures/city_items.dart';
 import 'package:db_course_app/navigation/app_router.dart';

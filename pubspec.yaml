@@ -22,6 +22,8 @@ dependencies:
   get_it: ^7.2.0
   dash_kit_network: ^3.1.1
   intl: ^0.17.0
+  flutter_hooks: ^0.18.4
+  golden_toolkit: ^0.13.0
 
 dev_dependencies:
   flutter_test:
