@@ -4,9 +4,11 @@ import 'package:db_course_app/app/operations.dart';
 import 'package:db_course_app/features/geolocation/actions/get_geolocation_action.dart';
 import 'package:db_course_app/features/weather/actions/get_weather_by_location.dart';
 import 'package:db_course_app/hooks/home_page_hooks.dart';
+import 'package:db_course_app/hooks/push_notification_hooks.dart';
 import 'package:db_course_app/navigation/app_router.dart';
 import 'package:db_course_app/presentation/search/search_page.dart';
 import 'package:db_course_app/resources/images.dart';
+import 'package:db_course_app/services/push_notification_service.dart';
 import 'package:db_course_app/utils/test.dart';
 import 'package:db_course_app/widgets/connected_loadable.dart';
 
@@ -48,6 +50,14 @@ class HomePage extends HookWidget {
       }
       return;
     }, const []);
+
+    requestNotificationPermissions();
+
+    usePushNotificationToken();
+
+    useFirebaseMessagingOpennedAppListener();
+    useFirebaseMessagingForegroundListener();
+    useFirebaseMessagingBackgroundListener();
 
     return Scaffold(
       appBar: AppBar(

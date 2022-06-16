@@ -5,6 +5,7 @@ import 'package:db_course_app/app/store/redux_action_logger.dart';
 import 'package:db_course_app/app/store/redux_action_observer.dart';
 import 'package:db_course_app/services/geolocation_service.dart';
 import 'package:db_course_app/services/weather_service.dart';
+import 'package:db_course_app/utils/error_recorder.dart';
 import 'package:get_it/get_it.dart';
 
 Store<AppState> configureStore() {
@@ -22,7 +23,11 @@ Store<AppState> configureStore() {
 
 void configureDependencyInjection(WeatherApiClient apiClient) {
   final geolocationService = GeolocationService();
-  final weatherService = WeatherService(apiClient);
+  final weatherService = WeatherService(
+    apiClient: apiClient,
+    errorRecorder: ErrorRecorder(context: (WeatherService).toString()),
+  );
+
   GetIt.I.registerSingleton<GeolocationService>(geolocationService);
   GetIt.I.registerSingleton<WeatherService>(weatherService);
 }

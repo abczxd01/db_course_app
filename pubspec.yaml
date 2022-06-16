@@ -24,6 +24,10 @@ dependencies:
   intl: ^0.17.0
   flutter_hooks: ^0.18.4
   golden_toolkit: ^0.13.0
+  firebase_core: ^1.17.1
+  firebase_analytics: ^9.1.9
+  firebase_crashlytics: ^2.8.1
+  firebase_messaging: ^11.4.1
 
 dev_dependencies:
   flutter_test:
