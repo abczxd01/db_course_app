@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "674932287105",
+    "project_id": "db-course-app-66b87",
+    "storage_bucket": "db-course-app-66b87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674932287105:android:6408e9393fa011e88b4f80",
+        "android_client_info": {
+          "package_name": "com.example.db_course_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674932287105-e5ethuep8gbfufvuup7df3ucg80rum13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANcImdGGer2BdmtPgG_PGiZnTGhyhMQSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674932287105-e5ethuep8gbfufvuup7df3ucg80rum13.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674932287105-fvl5tcf6gtpudommve9h165t8glscfs4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dbCourseApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
