@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dash_kit_core/dash_kit_core.dart';
 import 'package:db_course_app/app/app_state.dart';
 import 'package:db_course_app/app/operations.dart';
@@ -11,7 +13,6 @@ import 'package:db_course_app/resources/images.dart';
 import 'package:db_course_app/services/push_notification_service.dart';
 import 'package:db_course_app/utils/test.dart';
 import 'package:db_course_app/widgets/connected_loadable.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -30,6 +31,24 @@ class HomePage extends HookWidget {
     final dispatch = storeProvider.dispatch;
     final pastSearchCities = <String>[];
     final animation = useCurvedAnimation();
+
+    const platform = MethodChannel('db_course_app/battery');
+
+    // Get battery level.
+    final ValueNotifier<String> _batteryLevel =
+        useState('Unknown battery level.');
+
+    Future<void> _getBatteryLevel() async {
+      String batteryLevel;
+      try {
+        final int result = await platform.invokeMethod('getBatteryLevel');
+        batteryLevel = 'Battery level at $result % .';
+      } on PlatformException catch (e) {
+        batteryLevel = "Failed to get battery level: '${e.message}'.";
+      }
+
+      _batteryLevel.value = batteryLevel;
+    }
 
     final getGeolocationByLocation = () async {
       try {
@@ -77,6 +96,18 @@ class HomePage extends HookWidget {
               ),
             ),
             icon: SvgPicture.asset(Images.icSearch),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              _getBatteryLevel();
+              showSimpleDialog(
+                context: context,
+                title: 'Battery Level',
+                text: _batteryLevel.value,
+              );
+            },
+            backgroundColor: Colors.green,
+            child: const Icon(Icons.navigation),
           ),
         ],
       ),
